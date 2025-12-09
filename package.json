@@ -1,0 +1,15 @@
+{
+  "name": "all-possible-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "ANASTASIIA_ANISIMOVA <gorgona1597531597@gmail.com>",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
