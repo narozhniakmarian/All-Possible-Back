@@ -9,6 +9,7 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { errors } from 'celebrate';
+import toolsRoutes from './routes/toolsRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -21,6 +22,7 @@ app.use(cors());
 app.use(cookieParser());
 
 app.use(feedbacksRoutes);
+app.use(toolsRoutes);
 
 app.use(notFoundHandler);
 app.use(errors());
