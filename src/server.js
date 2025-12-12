@@ -1,4 +1,3 @@
-// src/server.js
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import helmet from 'helmet';
@@ -23,7 +22,21 @@ app.use(logger);
 
 app.use(helmet());
 app.use(express.json());
-app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL || ['http://localhost:3000', 'http://localhost:3005'] }));
+app.use(cors({
+  credentials: true,
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      process.env.FRONTEND_URL,
+      'http://localhost:3000',
+      'http://localhost:3005'
+    ].filter(Boolean);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);

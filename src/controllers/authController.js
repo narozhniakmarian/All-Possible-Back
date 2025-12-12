@@ -8,7 +8,7 @@ export const registerUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
-    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw createHttpError(400, 'Користувач з таким email вже існує');
     }
@@ -17,7 +17,7 @@ export const registerUser = async (req, res, next) => {
 
     const user = new User({
       name,
-      email: email.toLowerCase(),
+      email,
       password: hashedPassword,
     });
 
@@ -38,7 +38,7 @@ export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    const user = await User.findOne({ email }).select('+password');
     if (!user) {
       throw createHttpError(401, 'Невірний email або пароль');
     }
