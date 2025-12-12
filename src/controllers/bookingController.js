@@ -1,11 +1,13 @@
 import createHttpError from "http-errors";
-import { Tool, Booking } from "./models.js";
+import { Booking } from "../models/booking.js";
+import { Tool } from "../models/tool.js"; //десь так напевно буде називатися модель))
+
 import { checkAvailabilitySchema } from "../validations/bookingValidations.js";
 
 const datesOverlap = (start1, end1, start2, end2) => {
   return start1 <= end2 && start2 <= end1;
 };
-
+//розрахунок доби
 const calculateDays = (startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -17,6 +19,7 @@ const calculateDays = (startDate, endDate) => {
 /**
  * GET /tools/:toolId/availability?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
  */
+//тут я перевіряю вільні дати для toolId..
 export const checkAvailability = async (req, res, next) => {
   try {
     const { toolId } = req.params;
@@ -70,7 +73,7 @@ export const checkAvailability = async (req, res, next) => {
     return next(createHttpError(500, "Помилка перевірки наявності"));
   }
 };
-
+//контроллер для бронювання
 export const createBooking = async (req, res, next) => {
   try {
 
