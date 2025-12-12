@@ -3,15 +3,16 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import userRoutes from './routes/userRoutes.js';
 import 'dotenv/config';
-import feedbacksRoutes from './routes/feedbacksRoutes.js';
+
 import { logger } from './middleware/logger.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { errors } from 'celebrate';
+
+import userRoutes from './routes/userRoutes.js';
+import feedbacksRoutes from './routes/feedbacksRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -26,8 +27,8 @@ app.use(cookieParser());
 app.use(userRoutes);
 app.use(feedbacksRoutes);
 
-
 app.use(notFoundHandler);
+app.use(errors());
 app.use(errorHandler);
 
 await connectMongoDB();
