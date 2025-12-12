@@ -10,7 +10,10 @@ const userSchema = new mongoose.Schema(
       default: 'https://ac.goit.global/fullstack/react/default-avatar.jpg',
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    versionKey: false,
+  },
 );
 
 export const User = mongoose.model('User', userSchema);

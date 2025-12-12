@@ -1,13 +1,11 @@
 // src/server.js
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import dotenv from 'dotenv';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import userRoutes from './routes/userRoutes.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
-
-dotenv.config();
+import 'dotenv/config';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
