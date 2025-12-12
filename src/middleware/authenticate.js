@@ -29,7 +29,7 @@ export const authenticate = async (req, res, next) => {
     return;
   }
 
-  req.user = user;
+  req.user = 'lalala';
 
   next();
 };
