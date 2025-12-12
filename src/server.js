@@ -11,10 +11,6 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import categoriesRoutes from './routes/categoriesRoutes.js';
 
 import { logger } from './middleware/logger.js';
-import { connectMongoDB } from './db/connectMongoDB.js';
-import { notFoundHandler } from './middleware/notFoundHandler.js';
-import { errorHandler } from './middleware/errorHandler.js';
-import { errors } from 'celebrate';
 
 import userRoutes from './routes/userRoutes.js';
 import feedbacksRoutes from './routes/feedbacksRoutes.js';
