@@ -1,4 +1,4 @@
-// src/server.js
+
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import helmet from 'helmet';
@@ -8,12 +8,11 @@ import { errors } from 'celebrate';
 import { notFoundHandler } from '../src/middleware/notFoundHandler.js';
 import { errorHandler } from '../src/middleware/errorHandler.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
+import categoriesRoutes from './routes/categoriesRoutes.js';
 
 import { logger } from './middleware/logger.js';
-
 import userRoutes from './routes/userRoutes.js';
 import feedbacksRoutes from './routes/feedbacksRoutes.js';
-import categoriesRoutes from './routes/categoriesRoutes.js';
 import toolsRoutes from './routes/toolsRoutes.js';
 
 const app = express();
@@ -28,8 +27,8 @@ app.use(cookieParser());
 
 app.use(userRoutes);
 app.use(feedbacksRoutes);
+app.use(categoriesRoutes);
 app.use(toolsRoutes);
-app.use(categoriesRoutes);main
 
 app.use(notFoundHandler);
 app.use(errors());
