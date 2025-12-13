@@ -1,10 +1,5 @@
 
 
-
-
-import feedbacksRoutes from './routes/feedbacksRoutes.js';
-import toolsRoutes from './routes/toolsRoutes.js';
-
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import helmet from 'helmet';
@@ -17,8 +12,12 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import categoriesRoutes from './routes/categoriesRoutes.js';
 
 import { logger } from './middleware/logger.js';
-
 import userRoutes from './routes/userRoutes.js';
+
+
+
+import feedbacksRoutes from './routes/feedbacksRoutes.js';
+import toolsRoutes from './routes/toolsRoutes.js';
 
 
 const app = express();
@@ -38,6 +37,7 @@ app.use(userRoutes);
 
 app.use(feedbacksRoutes);
 app.use(categoriesRoutes);
+app.use(toolsRoutes);
 
 
 app.use(notFoundHandler);
