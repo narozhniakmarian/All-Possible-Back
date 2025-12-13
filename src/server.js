@@ -12,7 +12,6 @@ import categoriesRoutes from './routes/categoriesRoutes.js';
 
 import { logger } from './middleware/logger.js';
 import userRoutes from './routes/userRoutes.js';
-import bookingRoutes from './routes/bookingRoutes.js';
 import feedbacksRoutes from './routes/feedbacksRoutes.js';
 import toolsRoutes from './routes/toolsRoutes.js';
 
@@ -29,7 +28,6 @@ app.use(cookieParser());
 app.use(userRoutes);
 app.use(feedbacksRoutes);
 app.use(categoriesRoutes);
-app.use(bookingRoutes);
 app.use(toolsRoutes);
 
 app.use(notFoundHandler);

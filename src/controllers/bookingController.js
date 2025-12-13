@@ -16,21 +16,6 @@ const calculateDays = (startDate, endDate) => {
 };
 
 
-export const checkAvailability = async (req, res, next) => {
-
-  const { toolId } = req.params;
-
-  const tool = await Tool.findById(toolId);
-  if (!tool) {
-    return next(createHttpError(404, "Інструмент не знайдено"));
-  }
-
-  return res.status(200).json({
-    success: true,
-    bookedPeriods: tool.bookedDates,
-  });
-};
-//контроллер для бронювання
 export const createBooking = async (req, res, next) => {
 
   const {
