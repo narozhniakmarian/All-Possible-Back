@@ -1,12 +1,17 @@
-// import createHttpError from "http-errors";
+import createHttpError from "http-errors";
 import { Tool } from "../models/tool.js";
+import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
 
 
 export const createTool = async (req, res) => {
-
+if(!req.file) {
+  throw createHttpError(400, "Image is required")
+}
+const result = await saveFileToCloudinary(req.file.buffer);
     const tool = await Tool.create({
       ...req.body,
       owner: req.user._id,
+      images: result.secure_url,
     });
 
     res.status(201).json(tool);
