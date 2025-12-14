@@ -21,9 +21,22 @@ const PORT = process.env.PORT ?? 3000;
 
 app.use(logger);
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:3000', 'http://localhost:3001'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+}));
 app.use(helmet());
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
 
 app.use('/auth', authRoutes);
