@@ -10,10 +10,12 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import categoriesRoutes from './routes/categoriesRoutes.js';
 
 import { logger } from './middleware/logger.js';
-
 import userRoutes from './routes/userRoutes.js';
 import feedbacksRoutes from './routes/feedbacksRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import publicUserRoutes from './routes/publicUserRoutes.js';
+import toolsRoutes from './routes/toolsRoutes.js';
+
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -41,8 +43,10 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use(userRoutes);
+app.use(publicUserRoutes);
 app.use(feedbacksRoutes);
 app.use(categoriesRoutes);
+app.use(toolsRoutes);
 
 app.use(notFoundHandler);
 app.use(errors());
