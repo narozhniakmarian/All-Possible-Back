@@ -4,29 +4,29 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const toolSchema = new Schema({
-  name: {
-    type: String,
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
-    trim: true,
-  },
-  pricePerDay: {
-    type: Number,
-    required: true,
-    min: 0,
-  },
-  description: {
-    type: String,
-    trim: true,
   },
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
     required: true,
   },
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+  name: {
+    type: String,
     required: true,
+    trim: true,
+  },
+  description: {
+    type: String,
+    default: "",
+  },
+  pricePerDay: {
+    type: Number,
+    required: true,
+    min: 0,
   },
   images: {
     type: String,
@@ -44,7 +44,7 @@ const toolSchema = new Schema({
   },
   rentalTerms: {
     type: String,
-    trim: true,
+    default: "",
   },
   bookedDates: [{
     startDate: {
