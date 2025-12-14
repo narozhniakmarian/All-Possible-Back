@@ -16,7 +16,6 @@ import authRoutes from './routes/authRoutes.js';
 import publicUserRoutes from './routes/publicUserRoutes.js';
 import toolsRoutes from './routes/toolsRoutes.js';
 
-
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
@@ -24,24 +23,10 @@ app.use(logger);
 
 app.use(helmet());
 app.use(express.json());
-app.use(cors({
-  credentials: true,
-  origin: (origin, callback) => {
-    const allowedOrigins = [
-      process.env.FRONTEND_URL,
-      'http://localhost:3000',
-      'http://localhost:3005'
-    ].filter(Boolean);
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
+app.use(cors());
 app.use(cookieParser());
 
-app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
 app.use(userRoutes);
 app.use(publicUserRoutes);
 app.use(feedbacksRoutes);
