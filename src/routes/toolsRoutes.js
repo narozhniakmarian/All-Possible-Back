@@ -9,17 +9,25 @@ import { getToolById, deleteTool } from '../controllers/toolController.js';
 import { celebrate } from 'celebrate';
 import { createBookingSchema } from '../validations/bookingValidations.js';
 import { createBooking } from '../controllers/bookingController.js';
-import { upload } from '../middleware/multer.js';
+import { upload } from "../middleware/multer.js";
+import { parseJsonFields } from "../utils/parseJsonFields.js";
 const router = Router();
 
 router.post(
-  '/tools',
+  "/tools",
   authenticate,
+  upload.single("image"),
+  parseJsonFields,
   celebrate(createToolSchema),
-  upload.single('images'),
-  createTool,
+  createTool
 );
-router.get('/tools', celebrate(getToolsSchema), getTools);
+
+
+router.get("/tools", celebrate(getToolsSchema), getTools);
+
+
+
+
 
 router.get('/tools/:id', getToolById);
 
