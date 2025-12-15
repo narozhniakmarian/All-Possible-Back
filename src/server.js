@@ -1,5 +1,3 @@
-
-
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import helmet from 'helmet';
@@ -17,6 +15,8 @@ import userRoutes from './routes/userRoutes.js';
 
 
 import feedbacksRoutes from './routes/feedbacksRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import publicUserRoutes from './routes/publicUserRoutes.js';
 import toolsRoutes from './routes/toolsRoutes.js';
 
 
@@ -30,11 +30,9 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-
-app.use(toolsRoutes);
-
+app.use('/auth', authRoutes);
 app.use(userRoutes);
-
+app.use(publicUserRoutes);
 app.use(feedbacksRoutes);
 app.use(categoriesRoutes);
 app.use(toolsRoutes);

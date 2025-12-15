@@ -5,10 +5,11 @@ export const createToolSchema = {
   [Segments.BODY]: Joi.object({
     name: Joi.string().min(3).max(96).required(),
     pricePerDay: Joi.number().min(0).required(),
-    categoryId: Joi.string().required(),
+    category: Joi.string().hex().length(24).required(),
     description: Joi.string().min(20).max(2000).required(),
-    terms: Joi.string().min(20).max(1000).required(),
-    specifications: Joi.string().max(1000).optional(),
+    rentalTerms: Joi.string().min(20).max(1000).required(),
+    specifications: Joi.object().pattern(Joi.string(), Joi.string())
+  .optional(),
   })
 };
 
