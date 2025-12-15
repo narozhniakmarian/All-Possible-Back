@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors';
 import { Tool } from '../models/tool.js';
-import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getToolById = async (req, res, next) => {
   const { id } = req.params;
@@ -17,7 +17,6 @@ export const getToolById = async (req, res, next) => {
 
   res.status(200).json(tool);
 };
-
 
 export const deleteTool = async (req, res, next) => {
   const { id: toolId } = req.params;
@@ -36,23 +35,19 @@ export const deleteTool = async (req, res, next) => {
   res.status(200).json({ message: 'Tool deleted successfully' });
 };
 
-
 export const createTool = async (req, res) => {
-if(!req.file) {
-  throw createHttpError(400, "Image is required");
-}
-const result = await saveFileToCloudinary(req.file.buffer);
-    const tool = await Tool.create({
-      ...req.body,
-      owner: req.user._id,
-      images: result.secure_url,
-    });
+  if (!req.file) {
+    throw createHttpError(400, 'Image is required');
+  }
+  const result = await saveFileToCloudinary(req.file.buffer);
+  const tool = await Tool.create({
+    ...req.body,
+    owner: req.user._id,
+    images: result.secure_url,
+  });
 
-    res.status(201).json(tool);
-
+  res.status(201).json(tool);
 };
-
-
 
 export const getTools = async (req, res) => {
   const { page = 1, perPage = 10, category, search } = req.query;
@@ -61,12 +56,12 @@ export const getTools = async (req, res) => {
   const toolsQuery = Tool.find();
 
   if (category) {
-    const categories = category.split(",");
-    toolsQuery.where("category").in(categories);
+    const categories = category.split(',');
+    toolsQuery.where('category').in(categories);
   }
 
   if (search) {
-    toolsQuery.where("name").regex(new RegExp(search, "i"));
+    toolsQuery.where('name').regex(new RegExp(search, 'i'));
   }
 
   const [totalTools, tools] = await Promise.all([
@@ -84,5 +79,3 @@ export const getTools = async (req, res) => {
     tools,
   });
 };
-
-
