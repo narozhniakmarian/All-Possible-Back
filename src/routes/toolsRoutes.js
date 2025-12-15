@@ -7,7 +7,7 @@ import { createBooking } from '../controllers/bookingController.js';
 
 const router = express.Router();
 
-router.get('/api/tools/:id', getToolById);
+router.get('/tools/:id', getToolById);
 
 // DELETE /tools/:id — видалення інструменту власником
 router.delete('/tools/:id', authenticate, deleteTool);
