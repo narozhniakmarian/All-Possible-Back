@@ -66,6 +66,4 @@ const toolSchema = new Schema({
 });
 
 
-
-
 export const Tool = mongoose.models.Tool || model('Tool', toolSchema);

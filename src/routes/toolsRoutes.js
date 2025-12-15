@@ -8,9 +8,19 @@ import { celebrate } from 'celebrate';
 import { createBookingSchema } from '../validations/bookingValidations.js';
 import { createBooking } from '../controllers/bookingController.js';
 import { upload } from "../middleware/multer.js";
+import { parseJsonFields } from "../utils/parseJsonFields.js";
 const router = Router();
 
-router.post("/tools",  authenticate, celebrate(createToolSchema),upload.single("images"), createTool);
+router.post(
+  "/tools",
+  authenticate,
+  upload.single("image"),
+  parseJsonFields,
+  celebrate(createToolSchema),
+  createTool
+);
+
+
 router.get("/tools", celebrate(getToolsSchema), getTools);
 
 
