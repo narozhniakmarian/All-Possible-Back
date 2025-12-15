@@ -11,18 +11,32 @@ import categoriesRoutes from './routes/categoriesRoutes.js';
 
 import { logger } from './middleware/logger.js';
 import userRoutes from './routes/userRoutes.js';
+
+
+
 import feedbacksRoutes from './routes/feedbacksRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import publicUserRoutes from './routes/publicUserRoutes.js';
 import toolsRoutes from './routes/toolsRoutes.js';
+
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 app.use(logger);
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:3000', 'http://localhost:3001'];
+
 app.use(cors({
-  origin: true,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
 }));
 app.use(helmet());
@@ -36,9 +50,12 @@ app.use(feedbacksRoutes);
 app.use(categoriesRoutes);
 app.use(toolsRoutes);
 
+
 app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
+
+
 
 await connectMongoDB();
 

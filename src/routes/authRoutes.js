@@ -20,3 +20,4 @@ router.post('/logout', authenticate, logoutUser);
 router.post('/refresh', refreshSession);
 
 export default router;
+
