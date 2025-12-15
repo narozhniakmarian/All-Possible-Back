@@ -8,6 +8,9 @@ import { celebrate } from 'celebrate';
 import { createBookingSchema } from '../validations/bookingValidations.js';
 import { createBooking } from '../controllers/bookingController.js';
 import { upload } from "../middleware/multer.js";
+import { updateToolSchema } from '../validations/validateTool.js';
+import { updateTool } from '../controllers/toolController.js';
+
 const router = Router();
 
 router.post("/tools",  authenticate, celebrate(createToolSchema),upload.single("images"), createTool);
@@ -23,6 +26,9 @@ router.get('/tools/:id', getToolById);
 router.delete('/tools/:id', authenticate, deleteTool);
 
 router.post('/:toolId/bookings', authenticate, celebrate(createBookingSchema), createBooking);
+
+router.patch('/tools/:id', authenticate, celebrate(updateToolSchema), updateTool);
+
 
 
 export default router;

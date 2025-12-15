@@ -85,4 +85,36 @@ export const getTools = async (req, res) => {
   });
 };
 
+export const updateTool = async (req, res, next) => {
+  try {
+    const { id: toolId } = req.params;
+
+    if (!/^[0-9a-fA-F]{24}$/.test(toolId)) {
+      return next(createHttpError(400, 'Invalid tool id'));
+    }
+
+    const tool = await Tool.findById(toolId);
+    if (!tool) {
+      return next(createHttpError(404, 'Tool not found'));
+    }
+
+    if (tool.owner.toString() !== req.user._id.toString()) {
+      return next(createHttpError(403, 'Forbidden: not the owner'));
+    }
+
+    // whitelist (important)
+    const allowed = ['category', 'name', 'description', 'pricePerDay', 'rentalTerms', 'specifications', 'images'];
+    for (const key of Object.keys(req.body)) {
+      if (allowed.includes(key)) tool[key] = req.body[key];
+    }
+
+    await tool.save();
+
+    res.status(200).json(tool);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 
