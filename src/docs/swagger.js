@@ -8,7 +8,7 @@ export default {
 
   servers: [
     {
-      url: `https://all-possible-back-production.up.railway.app/api`,
+      url: `https://all-possible-back-production.up.railway.app`,
     },
   ],
 
@@ -594,6 +594,7 @@ export default {
       get: {
         tags: ['User'],
         summary: 'Get info about current user',
+        security: [{ bearerAuth: [] }],
         responses: {
           200: {
             description: 'User information',
@@ -925,6 +926,7 @@ export default {
       post: {
         tags: ['Tool'],
         summary: 'Create new tool',
+        security: [{ bearerAuth: [] }],
         requestBody: {
           required: true,
           content: {
@@ -1091,6 +1093,7 @@ export default {
       patch: {
         tags: ['Tool'],
         summary: 'Update tool',
+        security: [{ bearerAuth: [] }],
         description:
           'Partially update tool fields. Only the owner can update the tool.',
         parameters: [
@@ -1241,6 +1244,7 @@ export default {
       delete: {
         tags: ['Tool'],
         summary: 'Delete tool by id',
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: 'id',
@@ -1327,7 +1331,6 @@ export default {
         summary: 'Create booking',
         description: 'Create a booking for a tool',
         security: [{ bearerAuth: [] }],
-
         requestBody: {
           required: true,
           content: {
