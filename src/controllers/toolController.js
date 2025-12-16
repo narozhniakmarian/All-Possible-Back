@@ -39,7 +39,9 @@ export const createTool = async (req, res) => {
   if (!req.file) {
     throw createHttpError(400, 'Image is required');
   }
+
   const result = await saveFileToCloudinary(req.file.buffer);
+
   const tool = await Tool.create({
     ...req.body,
     owner: req.user._id,
@@ -78,4 +80,43 @@ export const getTools = async (req, res) => {
     totalPages,
     tools,
   });
+};
+
+export const updateTool = async (req, res, next) => {
+  try {
+    const { id: toolId } = req.params;
+
+    if (!/^[0-9a-fA-F]{24}$/.test(toolId)) {
+      return next(createHttpError(400, 'Invalid tool id'));
+    }
+
+    const tool = await Tool.findById(toolId);
+    if (!tool) {
+      return next(createHttpError(404, 'Tool not found'));
+    }
+
+    if (tool.owner.toString() !== req.user._id.toString()) {
+      return next(createHttpError(403, 'Forbidden: not the owner'));
+    }
+
+    const allowed = [
+      'category',
+      'name',
+      'description',
+      'pricePerDay',
+      'rentalTerms',
+      'specifications',
+      'images',
+    ];
+
+    for (const key of Object.keys(req.body)) {
+      if (allowed.includes(key)) tool[key] = req.body[key];
+    }
+
+    await tool.save();
+
+    res.status(200).json(tool);
+  } catch (err) {
+    next(err);
+  }
 };
