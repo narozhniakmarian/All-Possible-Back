@@ -8,7 +8,7 @@ export default {
 
   servers: [
     {
-      url: `http://localhost:${process.env.PORT || 3000}`,
+      url: `https://all-possible-back-production.up.railway.app/api`,
     },
   ],
 
