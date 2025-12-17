@@ -4,10 +4,20 @@ import { Tool } from '../models/tool.js';
 import { User } from '../models/user.js';
 
 export const getAllFeedbacks = async (req, res) => {
-  const { page = 1, perPage = 3 } = req.query;
+  const { page = 1, perPage = 3, toolId, userId } = req.query;
   const skip = (page - 1) * perPage;
 
-  const feedbacksQuery = Feedback.find();
+  const filter = {};
+
+  if (toolId) {
+    filter.toolId = toolId;
+  }
+
+  if (userId) {
+    filter.userId = userId;
+  }
+
+  const feedbacksQuery = Feedback.find(filter).sort({ createdAt: -1 });
 
   const [totalFeedbacks, feedbacks] = await Promise.all([
     feedbacksQuery.clone().countDocuments(),
