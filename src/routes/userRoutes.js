@@ -7,6 +7,6 @@ import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
 
-router.get('/user', authenticate, getCurrentUser);
-router.get('/user/:id/tools', getToolsCurrentUser);
+router.get('/users/me', authenticate, getCurrentUser);
+router.get('/users/:id/tools', getToolsCurrentUser);
 export default router;
