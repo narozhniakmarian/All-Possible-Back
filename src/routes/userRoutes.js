@@ -11,10 +11,10 @@ const router = Router();
 
 router.get('/users/me', authenticate, getCurrentUser);
 router.get('/users/:id/tools', getToolsCurrentUser);
-router.put(
+router.patch(
   '/users/me/edit',
   authenticate,
   upload.single('avatar'),
-  updateUserProfile
+  updateUserProfile,
 );
 export default router;
