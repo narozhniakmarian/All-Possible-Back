@@ -44,6 +44,9 @@ export default {
           name: { type: 'string' },
           email: { type: 'string', format: 'email' },
           avatar: { type: 'string', format: 'url' },
+          rating: { type: 'number' },
+          feedbackCount: { type: 'number' },
+          bio: { type: 'string' },
           createdAt: { type: 'string', format: 'date-time' },
           updatedAt: { type: 'string', format: 'date-time' },
         },
@@ -355,6 +358,9 @@ export default {
                     name: 'John Doe',
                     email: 'example@mail.com',
                     avatar: 'http://example.com/avatar.jpg',
+                    rating: 0,
+                    feedbackCount: 0,
+                    bio: 'User bio',
                     createdAt: '2023-01-01T00:00:00.000Z',
                     updatedAt: '2023-01-01T00:00:00.000Z',
                   },
@@ -445,6 +451,9 @@ export default {
                     name: 'John Doe',
                     email: 'example@mail.com',
                     avatar: 'http://example.com/avatar.jpg',
+                    rating: 0,
+                    feedbackCount: 0,
+                    bio: 'User bio',
                     createdAt: '2023-01-01T00:00:00.000Z',
                     updatedAt: '2023-01-01T00:00:00.000Z',
                   },
@@ -614,6 +623,112 @@ export default {
                     name: 'John Doe',
                     email: 'example@mail.com',
                     avatar: 'http://example.com/avatar.jpg',
+                    rating: 0,
+                    feedbackCount: 0,
+                    bio: 'User bio',
+                    createdAt: '2023-01-01T00:00:00.000Z',
+                    updatedAt: '2023-01-01T00:00:00.000Z',
+                  },
+                },
+              },
+            },
+          },
+          401: {
+            description: 'Not authenticated',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    message: {
+                      type: 'string',
+                      example: 'Not authenticated',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          500: {
+            description: 'Internal Server Error',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    message: {
+                      type: 'string',
+                      example: 'Something went wrong',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/users/me/edit': {
+      patch: {
+        tags: ['User'],
+        summary: 'Update user profile',
+        security: [{ bearerAuth: [] }],
+        requestBody: {
+          required: true,
+          content: {
+            'multipart/form-data': {
+              schema: {
+                type: 'object',
+                properties: {
+                  name: {
+                    type: 'string',
+                    minLength: 2,
+                    maxLength: 32,
+                    example: 'John Doe',
+                  },
+                  email: {
+                    type: 'string',
+                    format: 'email',
+                    example: 'example@mail.com',
+                  },
+                  bio: {
+                    type: 'string',
+                    description: 'User bio',
+                  },
+                  avatar: {
+                    type: 'string',
+                    format: 'binary',
+                    description: 'User avatar',
+                  },
+                },
+                required: [],
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: 'User updated successfully',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    user: {
+                      type: 'object',
+                      $ref: '#/components/schemas/User',
+                    },
+                  },
+                },
+                example: {
+                  user: {
+                    _id: '609e129e8f1b2c0015b8b456',
+                    name: 'John Doe',
+                    email: 'example@mail.com',
+                    avatar: 'http://example.com/avatar.jpg',
+                    rating: 0,
+                    feedbackCount: 0,
+                    bio: 'User bio',
                     createdAt: '2023-01-01T00:00:00.000Z',
                     updatedAt: '2023-01-01T00:00:00.000Z',
                   },
@@ -692,6 +807,9 @@ export default {
                     name: 'John Doe',
                     email: 'example@mail.com',
                     avatar: 'http://example.com/avatar.jpg',
+                    rating: 0,
+                    feedbackCount: 0,
+                    bio: 'User bio',
                     createdAt: '2023-01-01T00:00:00.000Z',
                     updatedAt: '2023-01-01T00:00:00.000Z',
                   },

@@ -25,10 +25,16 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-
     feedbackCount: {
       type: Number,
       default: 0,
+    },
+    bio: {
+      type: String,
+      maxLength: 500,
+      required: false,
+      trim: true,
+      default: '',
     },
   },
   {
