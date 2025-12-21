@@ -66,7 +66,9 @@ export const createFeedback = async (req, res, next) => {
 
   owner.rating =
     ratings.reduce((acc, currRate) => acc + currRate, 0) / ratings.length || 0;
-
+  
+ owner.feedbackCount = (owner.feedbackCount || 0) + 1;
+  
   await owner.save();
 
   res.status(201).json({ feedback });
