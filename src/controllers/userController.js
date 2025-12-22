@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import { Tool } from '../models/tool.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getCurrentUser = async (req, res, next) => {
   if (!req.user) {
@@ -28,10 +29,8 @@ export const updateUserProfile = async (req, res, next) => {
   if (bio) req.user.bio = bio;
 
   if (req.file) {
-    req.user.avatar = {
-      data: req.file.buffer,
-      contentType: req.file.mimetype,
-    };
+    const result = await saveFileToCloudinary(req.file.buffer);
+    req.user.avatar = result.secure_url;
   }
 
   await req.user.save();
