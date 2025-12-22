@@ -24,7 +24,10 @@ const PORT = process.env.PORT ?? 3000;
 
 app.use(logger);
 
-app.use(cors());
+app.use(cors({
+  origin: "https://all-possible-front-production.up.railway.app",
+  credentials: true
+}));
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
