@@ -25,7 +25,11 @@ const PORT = process.env.PORT ?? 3000;
 app.use(logger);
 
 app.use(cors({
-  origin: "https://all-possible-front-production.up.railway.app",
+  origin: [
+    "https://all-possible-front-production.up.railway.app",
+    "http://localhost:3000",
+    "http://localhost:3001"
+  ],
   credentials: true
 }));
 app.use(helmet());
