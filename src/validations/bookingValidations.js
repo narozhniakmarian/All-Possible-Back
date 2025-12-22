@@ -89,11 +89,11 @@ export const createBookingSchema = {
 
     novaPoshtaBranch: Joi.string()
       .trim()
-      .min(2)
+      .min(1)
       .max(200)
       .required()
       .messages({
-        'string.min': 'Відділення Нової Пошти має містити принаймні 3 символи',
+        'string.min': 'Відділення Нової Пошти має містити принаймні 1 символи',
         'string.max': 'Відділення Нової Пошти не може перевищувати 200 символів',
         'any.required': requiredInput,
       }),
