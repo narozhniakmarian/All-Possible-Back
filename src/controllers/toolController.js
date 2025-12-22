@@ -106,11 +106,16 @@ export const updateTool = async (req, res, next) => {
       'pricePerDay',
       'rentalTerms',
       'specifications',
-      'images',
+      
     ];
 
     for (const key of Object.keys(req.body)) {
       if (allowed.includes(key)) tool[key] = req.body[key];
+    }
+
+    if (req.file) {
+      const result = await saveFileToCloudinary(req.file.buffer);
+      tool.images = result.secure_url;
     }
 
     await tool.save();

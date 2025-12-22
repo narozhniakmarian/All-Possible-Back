@@ -67,6 +67,8 @@ router.post(
 router.patch(
   '/tools/:id',
   authenticate,
+  upload.single('image'),
+  parseJsonFields,
   celebrate(updateToolSchema),
   updateTool
 );
