@@ -26,7 +26,7 @@ export const updateUserProfile = async (req, res, next) => {
 
   if (name) req.user.name = name;
   if (email) req.user.email = email;
-  if (bio) req.user.bio = bio;
+  if (bio !== undefined) req.user.bio = bio;
 
   if (req.file) {
     const result = await saveFileToCloudinary(req.file.buffer);
