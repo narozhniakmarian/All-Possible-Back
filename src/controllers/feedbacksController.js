@@ -4,24 +4,26 @@ import { Tool } from '../models/tool.js';
 import { User } from '../models/user.js';
 
 export const getAllFeedbacks = async (req, res) => {
-  const { page = 1, perPage = 12, toolId, userId, ownerId } = req.query;
+  const { toolId, userId, ownerId } = req.query;
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 12;
   const skip = (page - 1) * perPage;
 
   const filter = {};
 
+  // If specific toolId provided - use it (tool details page)
   if (toolId) {
     filter.toolId = toolId;
+  }
+  // If ownerId provided without toolId - get all tools of owner (profile page)
+  else if (ownerId) {
+    const ownerTools = await Tool.find({ owner: ownerId }).select('_id');
+    const toolIds = ownerTools.map(t => t._id);
+    filter.toolId = { $in: toolIds };
   }
 
   if (userId) {
     filter.userId = userId;
-  }
-
-  // Get feedbacks for tools owned by specific user (for profile page)
-  if (ownerId) {
-    const ownerTools = await Tool.find({ owner: ownerId }).select('_id');
-    const toolIds = ownerTools.map(t => t._id);
-    filter.toolId = { $in: toolIds };
   }
 
   const feedbacksQuery = Feedback.find(filter).sort({ createdAt: -1 });

@@ -9,7 +9,7 @@ export const getToolById = async (req, res, next) => {
     return next(createHttpError(400, 'Invalid tool id'));
   }
 
-  const tool = await Tool.findById(id);
+  const tool = await Tool.findById(id).populate('feedbacks');
 
   if (!tool) {
     return next(createHttpError(404, 'Tool not found'));
