@@ -39,12 +39,12 @@ export const loginUser = async (req, res, next) => {
 
   const user = await User.findOne({ email }).select('+password');
   if (!user) {
-    return next(createHttpError(401, 'Невірний email або пароль'));
+    return next(createHttpError(401, 'Некоректний емейл'));
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    throw createHttpError(401, 'Невірний email або пароль');
+    throw createHttpError(401, 'Некоректний пароль');
   }
 
   await Session.deleteMany({ userId: user._id });
