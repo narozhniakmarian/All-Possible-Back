@@ -20,6 +20,13 @@ export const getToolsSchema = {
   }),
 };
 
+export const getUserToolsSchema = {
+  [Segments.QUERY]: Joi.object({
+    page: Joi.number().integer().min(1).default(1),
+    perPage: Joi.number().integer().min(1).default(8),
+  }),
+};
+
 export const updateToolSchema = {
   [Segments.BODY]: Joi.object({
     name: Joi.string().min(3).max(96),
@@ -31,4 +38,3 @@ export const updateToolSchema = {
     images: Joi.string().uri(),
   }).min(1),
 };
-
