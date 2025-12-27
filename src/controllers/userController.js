@@ -12,9 +12,24 @@ export const getCurrentUser = async (req, res, next) => {
 
 export const getToolsCurrentUser = async (req, res, next) => {
   const { id } = req.params;
+  const { page = 1, perPage = 8 } = req.query;
 
-  const tool = await Tool.find({ owner: id });
-  res.status(200).json(tool);
+  const skip = (page - 1) * perPage;
+
+  const toolQuery = Tool.find({ owner: id });
+  const [totalItems, tools] = await Promise.all([
+    toolQuery.clone().countDocuments(),
+    toolQuery.skip(skip).limit(perPage),
+  ]);
+  const totalPages = Math.ceil(totalItems / perPage);
+
+  res.status(200).json({
+    page,
+    perPage,
+    totalItems,
+    totalPages,
+    tools,
+  });
 };
 
 export const updateUserProfile = async (req, res, next) => {
