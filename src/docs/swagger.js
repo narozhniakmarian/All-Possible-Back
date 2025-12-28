@@ -867,6 +867,18 @@ export default {
             },
             description: 'User id',
           },
+          {
+            in: 'query',
+            name: 'page',
+            schema: { type: 'integer', default: 1 },
+            description: 'Page number',
+          },
+          {
+            in: 'query',
+            name: 'perPage',
+            schema: { type: 'integer', default: 8 },
+            description: 'Items per page',
+          },
         ],
         responses: {
           200: {
@@ -876,6 +888,10 @@ export default {
                 schema: {
                   type: 'object',
                   properties: {
+                    page: { type: 'integer' },
+                    perPage: { type: 'integer' },
+                    totalItems: { type: 'integer' },
+                    totalPages: { type: 'integer' },
                     tools: {
                       type: 'array',
                       $ref: '#/components/schemas/Tool',
