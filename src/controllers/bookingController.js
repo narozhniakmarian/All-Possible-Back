@@ -115,3 +115,45 @@ export const createBooking = async (req, res, next) => {
     },
   });
 };
+
+
+
+
+export const checkAvailability = async (req, res, next) => {
+  const { userId } = req.params;
+
+
+  if (userId !== req.user._id.toString()) {
+    return next(createHttpError(403, "Доступ заборонено"));
+  }
+
+
+  const bookings = await Booking.find({ userId: userId })
+    .populate('toolId', 'name images pricePerDay')
+    .sort({ startDate: -1 });
+
+  if (!bookings || bookings.length === 0) {
+    return res.status(200).json({
+      success: true,
+      message: "Бронювань не знайдено",
+      bookings: [],
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    count: bookings.length,
+    bookings: bookings.map(booking => ({
+      id: booking._id,
+      toolName: booking.toolId?.name,
+      toolImage: booking.toolId?.images,
+      startDate: booking.startDate,
+      endDate: booking.endDate,
+      totalPrice: booking.totalPrice,
+      status: booking.status,
+      deliveryCity: booking.deliveryCity,
+      novaPoshtaBranch: booking.novaPoshtaBranch,
+      createdAt: booking.createdAt,
+    })),
+  });
+};
