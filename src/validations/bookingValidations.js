@@ -102,6 +102,5 @@ export const createBookingSchema = {
 
 
 export const checkAvailabilitySchema = Joi.object({
-  toolId: Joi.string().hex().length(24).required()
-
+  userId: Joi.string().hex().length(24).required()
 });
