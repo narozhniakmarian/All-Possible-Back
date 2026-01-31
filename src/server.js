@@ -26,7 +26,7 @@ app.use(logger);
 
 app.use(cors({
   origin: [
-    "https://all-possible-front-production.up.railway.app",
+    "https://all-possible-front-theta.vercel.app",
     "http://localhost:3000",
     "http://localhost:3001"
   ],
